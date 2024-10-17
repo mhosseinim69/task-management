@@ -1,6 +1,7 @@
 const User = require("./user.model.cjs");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Task = require("../tasks/task.model.cjs");
 
 const signToken = (userId) => {
     const payload = {
@@ -98,28 +99,33 @@ exports.updateUser = async (id, password) => {
 };
 
 exports.getUsers = async () => {
-    const users = await User.find().lean();
+    const users = await User.find()
+        .populate('tasks').lean();
     return users;
 };
 
 exports.getUserById = async (id) => {
-    const user = await User.findById(id).lean();
-    if (!user) {
-        const error = new Error('User not found');
-        error.statusCode = 404;
-        throw error;
-    }
-
+    const user = await User.findById(id)
+        .populate('tasks').lean();
     return user;
 };
 
-exports.deleteUser = async (id) => {
+exports.deleteUser = async (id, userIdToken) => {
     const user = await User.findById(id);
     if (!user) {
         const error = new Error('User not found');
         error.statusCode = 404;
         throw error;
     }
+    if (user._id !== userIdToken) {
+        const error = new Error('You do not have access to this user');
+        error.statusCode = 400;
+        throw error;
+    }
+
+    await Task.deleteMany({
+        user: id
+    });
 
     await User.findByIdAndDelete(id);
 

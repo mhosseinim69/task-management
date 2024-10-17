@@ -4,13 +4,15 @@ const app = express();
 const connectToDatabase = require("./middleware/db.cjs");
 require('dotenv').config();
 const verifyUserToken = require("./middleware/auth.cjs");
-const userRoute = require("./components/users/user.route.cjs");
 const errorHandler = require('./middleware/errorHandler.cjs');
+const userRoute = require("./components/users/user.route.cjs");
+const taskRoute = require("./components/tasks/task.route.cjs");
 
 app.use(cors());
 app.use(express.json());
 
-app.use("/task/", userRoute);
+app.use("/taskmanagement/", userRoute);
+app.use("/taskmanagement/", verifyUserToken, taskRoute);
 
 app.use(errorHandler);
 

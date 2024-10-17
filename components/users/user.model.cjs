@@ -18,6 +18,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    tasks: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Task',
+    }],
 }, {
     timestamps: true
 });

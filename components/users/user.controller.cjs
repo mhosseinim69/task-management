@@ -53,9 +53,10 @@ exports.index = async (req, res, next) => {
 
 exports.read = async (req, res, next) => {
     const userId = req.params.id
+    const userIdToken = req.user.user.id;
 
     try {
-        const user = await UserService.getUserById(userId);
+        const user = await UserService.getUserById(userId, userIdToken);
         return res.json(user);
     } catch (error) {
         next(error);
