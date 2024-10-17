@@ -24,7 +24,6 @@ exports.createTask = async (title, status, userId) => {
 };
 
 exports.updateTask = async (taskId, title, status, userId) => {
-
     const task = await Task.findOne({
         _id: taskId,
         user: userId
