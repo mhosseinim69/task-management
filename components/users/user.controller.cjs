@@ -53,10 +53,9 @@ exports.index = async (req, res, next) => {
 
 exports.read = async (req, res, next) => {
     const userId = req.params.id
-    const userIdToken = req.user.user.id;
 
     try {
-        const user = await UserService.getUserById(userId, userIdToken);
+        const user = await UserService.getUserById(userId);
         return res.json(user);
     } catch (error) {
         next(error);
@@ -65,6 +64,7 @@ exports.read = async (req, res, next) => {
 
 exports.remove = async (req, res, next) => {
     const userId = req.params.id
+
     try {
         await UserService.deleteUser(userId);
         return res.json({
