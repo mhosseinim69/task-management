@@ -33,9 +33,15 @@ exports.update = async (req, res, next) => {
 
 exports.index = async (req, res, next) => {
     const userId = req.user.user.id;
+    const {
+        status,
+        startDate,
+        endDate,
+        title
+    } = req.query;
 
     try {
-        const tasks = await TaskService.getTasks(userId);
+        const tasks = await TaskService.getTasks(userId, status, startDate, endDate, title);
         return res.json(tasks);
     } catch (error) {
         next(error);
