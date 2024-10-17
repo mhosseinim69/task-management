@@ -119,7 +119,7 @@ exports.deleteUser = async (id, userIdToken) => {
     }
     if (user._id !== userIdToken) {
         const error = new Error('You do not have access to this user');
-        error.statusCode = 400;
+        error.statusCode = 403;
         throw error;
     }
 

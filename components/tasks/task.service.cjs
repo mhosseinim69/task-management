@@ -61,7 +61,7 @@ exports.getTaskById = async (taskId, userId) => {
 
     if (task.user._id.toString() !== userId) {
         const error = new Error('You do not have access to this user');
-        error.statusCode = 400;
+        error.statusCode = 403;
         throw error;
     }
 
@@ -77,7 +77,7 @@ exports.deleteTask = async (taskId, userId) => {
     }
     if (task.user._id.toString() !== userId) {
         const error = new Error('You do not have access to this task');
-        error.statusCode = 400;
+        error.statusCode = 403;
         throw error;
     }
 
