@@ -34,14 +34,8 @@ $ docker-compose down
 
 ```
 
-```
-
 ## Stay in touch
 
 - Author - Mostafa Hosseini
 - Gmail - [m.hosseini.m69@gmail.com](m.hosseini.m69@gmail.com)
 - linkedin - [@Mostafa Hosseini](https://www.linkedin.com/in/mostafa-hosseini-765349246/)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
