@@ -120,16 +120,11 @@ exports.getUserById = async (id) => {
     return user;
 };
 
-exports.deleteUser = async (id, userIdToken) => {
+exports.deleteUser = async (id) => {
     const user = await User.findById(id);
     if (!user) {
         const error = new Error('User not found');
         error.statusCode = 404;
-        throw error;
-    }
-    if (user._id !== userIdToken) {
-        const error = new Error('You do not have access to this user');
-        error.statusCode = 403;
         throw error;
     }
 
