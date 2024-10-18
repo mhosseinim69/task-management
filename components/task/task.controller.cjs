@@ -50,9 +50,9 @@ exports.index = async (req, res, next) => {
 
 exports.read = async (req, res, next) => {
     const taskId = req.params.id
-    const userId = req.user.id;
+
     try {
-        const task = await TaskService.getTaskById(taskId, userId);
+        const task = await TaskService.getTaskById(taskId);
         return res.json(task);
     } catch (error) {
         next(error);
@@ -61,10 +61,9 @@ exports.read = async (req, res, next) => {
 
 exports.remove = async (req, res, next) => {
     const taskId = req.params.id
-    const userId = req.user.id;
 
     try {
-        await TaskService.deleteTask(taskId, userId);
+        await TaskService.deleteTask(taskId);
         return res.json({
             msg: "Task was deleted."
         });

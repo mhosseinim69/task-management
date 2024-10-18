@@ -23,11 +23,6 @@ exports.updateTask = async (taskId, title, status, userId) => {
         _id: taskId,
         user: userId
     });
-    if (!task) {
-        const error = new Error('Task not found or you are not authorized');
-        error.statusCode = 404;
-        throw error;
-    }
 
     if (title) {
         task.title = title;
@@ -76,27 +71,11 @@ exports.getTaskById = async (taskId, userId) => {
     const task = await Task.findById(taskId)
         .populate('user', 'email username').lean();
 
-    if (task.user._id.toString() !== userId) {
-        const error = new Error('You do not have access to this user');
-        error.statusCode = 403;
-        throw error;
-    }
-
     return task;
 };
 
 exports.deleteTask = async (taskId, userId) => {
     const task = await Task.findById(taskId);
-    if (!task) {
-        const error = new Error('Task not found');
-        error.statusCode = 404;
-        throw error;
-    }
-    if (task.user._id.toString() !== userId) {
-        const error = new Error('You do not have access to this task');
-        error.statusCode = 403;
-        throw error;
-    }
 
     await Task.findByIdAndDelete(taskId);
 
