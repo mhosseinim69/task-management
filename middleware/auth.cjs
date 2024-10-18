@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+const Token = require('../components/token/token.model.cjs');
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
     const authHeader = req.header('Authorization');
     const token = authHeader ? authHeader.replace('Bearer ', '') : null;
 
@@ -12,7 +13,17 @@ const auth = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+        const validToken = await Token.findOne({
+            token
+        });
+
+        if (!validToken) {
+            return res.status(401).json({
+                message: 'Invalid or revoked token'
+            });
+        }
+
+        req.user = decoded.user;
         next();
     } catch (error) {
         res.status(401).json({

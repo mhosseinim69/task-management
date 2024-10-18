@@ -1,4 +1,4 @@
-const taskValidate = require("../../components/tasks/task.validation.cjs");
+const taskValidate = require("../../components/task/task.validation.cjs");
 const validate = require("../../middleware/validate.cjs");
 const {
     create,

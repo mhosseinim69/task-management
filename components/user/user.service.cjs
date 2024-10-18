@@ -1,7 +1,8 @@
 const User = require("./user.model.cjs");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Task = require("../tasks/task.model.cjs");
+const Task = require("../task/task.model.cjs");
+const Token = require('../token/token.model.cjs');
 
 const signToken = (userId) => {
     const payload = {
@@ -49,6 +50,10 @@ exports.registerUser = async (email, name, password) => {
     await user.save();
 
     const token = await signToken(user.id);
+    await new Token({
+        userId: user._id,
+        token
+    }).save();
 
     return {
         user,
@@ -74,6 +79,11 @@ exports.loginUser = async (email, password) => {
     }
 
     const token = await signToken(user.id);
+    await new Token({
+        userId: user._id,
+        token
+    }).save();
+
     return token;
 };
 
@@ -128,6 +138,10 @@ exports.deleteUser = async (id, userIdToken) => {
     });
 
     await User.findByIdAndDelete(id);
+
+    await Token.deleteMany({
+        userId: id
+    });
 
     return {
         message: 'User successfully deleted'

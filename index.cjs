@@ -5,8 +5,8 @@ const connectToDatabase = require("./middleware/db.cjs");
 require('dotenv').config();
 const verifyUserToken = require("./middleware/auth.cjs");
 const errorHandler = require('./middleware/errorHandler.cjs');
-const userRoute = require("./components/users/user.route.cjs");
-const taskRoute = require("./components/tasks/task.route.cjs");
+const userRoute = require("./components/user/user.route.cjs");
+const taskRoute = require("./components/task/task.route.cjs");
 
 app.use(cors());
 app.use(express.json());

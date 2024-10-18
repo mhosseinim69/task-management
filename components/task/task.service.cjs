@@ -1,13 +1,8 @@
 const Task = require("./task.model.cjs");
-const User = require("../users/user.model.cjs");
+const User = require("../user/user.model.cjs");
 
 exports.createTask = async (title, status, userId) => {
     const user = await User.findById(userId);
-    if (!user) {
-        const error = new Error('User not found');
-        error.statusCode = 404;
-        throw error;
-    }
 
     const task = new Task({
         title,
