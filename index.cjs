@@ -5,6 +5,7 @@ const connectToDatabase = require("./middleware/db.cjs");
 require('dotenv').config();
 const verifyUserToken = require("./middleware/auth.cjs");
 const errorHandler = require('./middleware/errorHandler.cjs');
+const logger = require('./middleware/logger.cjs');
 const userRoute = require("./components/user/user.route.cjs");
 const taskRoute = require("./components/task/task.route.cjs");
 
@@ -20,10 +21,10 @@ connectToDatabase()
     .then(() => {
         const PORT = process.env.PORT || 5000;
         app.listen(PORT, () => {
-            console.log(`Server started on port ${PORT}`);
+            logger.info(`Server started on port ${PORT}`);
         });
     })
     .catch((error) => {
-        console.error("Error connecting to database:", error);
+        logger.error("Error connecting to database:", error);
         process.exit(1);
     });

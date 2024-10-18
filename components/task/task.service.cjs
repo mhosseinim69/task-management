@@ -67,15 +67,15 @@ exports.getTasks = async (userId, status, startDate, endDate, title) => {
     return tasks;
 };
 
-exports.getTaskById = async (taskId, userId) => {
+exports.getTaskById = async (taskId) => {
     const task = await Task.findById(taskId)
         .populate('user', 'email username').lean();
 
     return task;
 };
 
-exports.deleteTask = async (taskId, userId) => {
-    const task = await Task.findById(taskId);
+exports.deleteTask = async (taskId) => {
+    await Task.findById(taskId);
 
     await Task.findByIdAndDelete(taskId);
 
