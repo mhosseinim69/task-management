@@ -1,4 +1,4 @@
-const taskValidate = require("../../components/task/task.validation.cjs");
+const taskValidate = require("./task.validation.cjs");
 const validate = require("../../middleware/validate.cjs");
 const policyCheck = require('../../middleware/policyCheck.cjs');
 const Task = require('./task.model.cjs');

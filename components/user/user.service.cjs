@@ -117,6 +117,13 @@ exports.getUsers = async () => {
 exports.getUserById = async (id) => {
     const user = await User.findById(id)
         .populate('tasks').lean();
+
+    if (!user) {
+        const error = new Error('User not found');
+        error.statusCode = 404;
+        throw error;
+    }
+
     return user;
 };
 

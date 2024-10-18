@@ -1,5 +1,5 @@
 const auth = require("../../middleware/auth.cjs");
-const userValidate = require("../../components/user/user.validation.cjs");
+const userValidate = require("./user.validation.cjs");
 const validate = require("../../middleware/validate.cjs");
 const {
     register,
