@@ -75,7 +75,15 @@ exports.getTaskById = async (taskId) => {
 };
 
 exports.deleteTask = async (taskId) => {
-    await Task.findById(taskId);
+    const task = await Task.findById(taskId);
+
+    await User.updateOne({
+        _id: task.user
+    }, {
+        $pull: {
+            tasks: taskId
+        }
+    });
 
     await Task.findByIdAndDelete(taskId);
 
