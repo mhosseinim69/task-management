@@ -99,41 +99,18 @@ exports.updateUser = async (id, password) => {
         }
     );
 
-    if (!updatedUser) {
-        const error = new Error('User not found');
-        error.statusCode = 404;
-        throw error;
-    }
-
     return updatedUser;
-};
-
-exports.getUsers = async () => {
-    const users = await User.find()
-        .populate('tasks').lean();
-    return users;
 };
 
 exports.getUserById = async (id) => {
     const user = await User.findById(id)
         .populate('tasks').lean();
 
-    if (!user) {
-        const error = new Error('User not found');
-        error.statusCode = 404;
-        throw error;
-    }
-
     return user;
 };
 
 exports.deleteUser = async (id) => {
-    const user = await User.findById(id);
-    if (!user) {
-        const error = new Error('User not found');
-        error.statusCode = 404;
-        throw error;
-    }
+    await User.findById(id);
 
     await Task.deleteMany({
         user: id

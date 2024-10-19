@@ -32,7 +32,7 @@ exports.update = async (req, res, next) => {
     const {
         password
     } = req.body;
-    const userId = req.params.id
+    const userId = req.user.id
 
     try {
         const user = await UserService.updateUser(userId, password);
@@ -42,17 +42,8 @@ exports.update = async (req, res, next) => {
     }
 };
 
-exports.index = async (req, res, next) => {
-    try {
-        const users = await UserService.getUsers();
-        return res.json(users);
-    } catch (error) {
-        next(error);
-    }
-};
-
 exports.read = async (req, res, next) => {
-    const userId = req.params.id
+    const userId = req.user.id
 
     try {
         const user = await UserService.getUserById(userId);
@@ -63,7 +54,7 @@ exports.read = async (req, res, next) => {
 };
 
 exports.remove = async (req, res, next) => {
-    const userId = req.params.id
+    const userId = req.user.id
 
     try {
         await UserService.deleteUser(userId);
